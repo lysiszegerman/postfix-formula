@@ -89,6 +89,7 @@ y
 {%-   else -%}
 {%-     set comment = '#' -%}
 {%-   endif %}
+THIS IS FOO!
 {{ "%s%-9s %-5s %-7s %-7s %-7s %-7s %-7s %s" | format(comment,
                                                service_param(service, service_name, 'service', service_name),
                                                service_param(service, service_name, 'type'),
@@ -99,6 +100,7 @@ y
                                                service_param(service, service_name, 'maxproc'),
                                                service_param(service, service_name, 'command', service_name)) -}}
 {%-   if service.args is not none -%}
+I HAVE A SERVICE: 
 {%-     for option in service.get('args', postfix_master_services.defaults[
                                             service_name].get('args', [])) -%}
 {%-       if option.startswith('#') %}
@@ -110,6 +112,7 @@ y
 {%-   endif %}
 {%- endfor %}
 #
+EXTRA SERVICES NAO
 {%- set handled_extra_services = [] -%}
 {%- macro extra_service(service_name, wrap=False) -%}
 {%-   do handled_extra_services.append(service_name) -%}
@@ -121,7 +124,6 @@ y
 {%-   else -%}
 {%-     set comment = '#' -%}
 {%-   endif -%}
-THIS IS FOO
 {{    "%s%-9s %-5s %-7s %-7s %-7s %-7s %-7s %s" | format(comment,
                                                service_param(service, service_name, 'service', service_name),
                                                service_param(service, service_name, 'type'),
