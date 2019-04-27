@@ -121,6 +121,7 @@ y
 {%-   else -%}
 {%-     set comment = '#' -%}
 {%-   endif -%}
+THIS IS FOO
 {{    "%s%-9s %-5s %-7s %-7s %-7s %-7s %-7s %s" | format(comment,
                                                service_param(service, service_name, 'service', service_name),
                                                service_param(service, service_name, 'type'),
