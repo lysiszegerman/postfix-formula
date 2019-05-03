@@ -87,13 +87,69 @@ include:
       - service: postfix
     - template: jinja
 
-run-postmap:
+run-postmap_transport:
   cmd.wait:
     - name: {{ postfix.xbin_prefix }}/sbin/postmap {{ postfix.config_path }}/transport
     - cwd: /
     - watch:
       - file: {{ postfix.config_path }}/transport
 {% endif %}
+
+{% if 'policyd_recipients_whitelist' in pillar.get('postfix', '') %}
+{{ postfix.config_path }}/policyd_recipients_whitelist:
+  file.managed:
+    - source: salt://postfix/files/policyd_recipients_whitelist
+    - user: root
+    - group: {{ postfix.root_grp }}
+    - mode: 644
+    - require:
+      - pkg: postfix
+    - watch_in:
+      - service: postfix
+    - template: jinja
+
+run-postmap_policyd_recipients_whitelist:
+  cmd.wait:
+    - name: {{ postfix.xbin_prefix }}/sbin/postmap {{ postfix.config_path }}/policyd_recipients_whitelist
+    - cwd: /
+    - watch:
+      - file: {{ postfix.config_path }}/policyd_recipients_whitelist
+{% endif %}
+
+{% if 'header_checks' in pillar.get('postfix', '') %}
+{%    if salt['pillar.get']('postfix:header_checks:use_file', true) == true %}
+{%      if salt['pillar.get']('postfix:header_checks:content', None} is string %}
+postfix_header_checks:
+  file.managed:
+    - name: {{ postfix.config_path }}/header_checks
+    - contents_pillar: postfix:header_checks:content
+    - user: root
+    - group: {{ postfix.root_grp }}
+    - mode 644
+    - require:
+      - pkg: postfix
+    - watch_in: postfix
+{%      endif %}
+{%    endif %}
+{% endif %}
+
+{% if 'body_checks' in pillar.get('postfix', '') %}
+{%    if salt['pillar.get']('postfix:body_checks:use_file', true) == true %}
+{%      if salt['pillar.get']('postfix:body_checks:content', None} is string %}
+postfix_body_checks:
+  file.managed:
+    - name: {{ postfix.config_path }}/body_checks
+    - contents_pillar: postfix:body_checks:content
+    - user: root
+    - group: {{ postfix.root_grp }}
+    - mode 644
+    - require:
+      - pkg: postfix
+    - watch_in: postfix
+{%      endif %}
+{%    endif %}
+{% endif %}
+
 
 {%- for domain in salt['pillar.get']('postfix:certificates', {}).keys() %}
 
