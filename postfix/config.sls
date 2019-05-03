@@ -125,7 +125,7 @@ postfix_header_checks:
     - contents_pillar: postfix:header_checks:content
     - user: root
     - group: {{ postfix.root_grp }}
-    - mode 644
+    - mode: 644
     - require:
       - pkg: postfix
     - watch_in: postfix
@@ -142,7 +142,7 @@ postfix_body_checks:
     - contents_pillar: postfix:body_checks:content
     - user: root
     - group: {{ postfix.root_grp }}
-    - mode 644
+    - mode: 644
     - require:
       - pkg: postfix
     - watch_in: postfix
