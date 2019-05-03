@@ -118,7 +118,7 @@ run-postmap_policyd_recipients_whitelist:
 
 {% if 'header_checks' in pillar.get('postfix', '') %}
 {%    if salt['pillar.get']('postfix:header_checks:use_file', true) == true %}
-{%      if salt['pillar.get']('postfix:header_checks:content', None} is string %}
+{%      if salt['pillar.get']('postfix:header_checks:content', None) is string %}
 postfix_header_checks:
   file.managed:
     - name: {{ postfix.config_path }}/header_checks
@@ -135,7 +135,7 @@ postfix_header_checks:
 
 {% if 'body_checks' in pillar.get('postfix', '') %}
 {%    if salt['pillar.get']('postfix:body_checks:use_file', true) == true %}
-{%      if salt['pillar.get']('postfix:body_checks:content', None} is string %}
+{%      if salt['pillar.get']('postfix:body_checks:content', None) is string %}
 postfix_body_checks:
   file.managed:
     - name: {{ postfix.config_path }}/body_checks
