@@ -171,7 +171,7 @@ y
                                                     'command': 'pipe',
                                                     'chroot': False,
                                                     'enable': True,
-                                                    'extras': '-d ${recipient}',
+                                                    'extras': dovecot.get('extras','-d ${recipient}'),
                                                     'flags': dovecot.get('flags', 'DRhu'),
                                                     'type': 'unix',
                                                     'unpriv': False,
