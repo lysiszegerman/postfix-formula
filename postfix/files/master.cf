@@ -131,7 +131,7 @@ y
                                                service_param(service, service_name, 'maxproc'),
                                                service_param(service, service_name, 'command', service_name)) }}
 {%-   if 'no_args' in service -%}
-{%-     set parameter_str = "%s %s" | format(comment,service_param(service, service_name, 'extras', '')) -%}
+{%-     set parameter_str = "%s %s" | format(comment,service_param(service, service_name, 'extras', '')) | indent(8) -%}
 {%-   else -%}
 {%-   if 'flags' in service or 'flags' in postfix_master_services.defaults[service_name] -%}
 {%-     set parameter_str = "%s  flags=%s user=%s argv=%s %s" | format(comment,
